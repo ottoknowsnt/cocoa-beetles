@@ -1,39 +1,36 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
+  <div class="stars"></div>
   <RouterView />
-
-  <nav>
-    <RouterLink to="/">Countdown</RouterLink>
-    <RouterLink to="/challenge">Challenge</RouterLink>
-  </nav>
 </template>
 
 <style scoped>
-nav {
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+  height: 100%;
+  background-image:
+    radial-gradient(2px 2px at 20px 140px, white, transparent),
+    radial-gradient(1px 1px at 60px 30px, white, transparent),
+    radial-gradient(1px 1px at 170px 140px, white, transparent),
+    radial-gradient(2px 2px at 150px 70px, white, transparent);
+  background-repeat: repeat;
+  background-size: 200px 150px;
+  animation: 3s linear 1s infinite alternate twinkle;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.1;
+  }
 }
 </style>

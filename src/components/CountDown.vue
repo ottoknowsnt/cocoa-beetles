@@ -19,9 +19,7 @@ export default {
 
 <style scoped>
 .count-down {
-  width: 100%;
-  font-size: 100px;
+  font-size: 1.5rem;
   text-align: center;
-  margin-top: 2rem;
 }
 </style>
