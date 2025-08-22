@@ -30,7 +30,7 @@
 body {
   min-height: 100vh;
   color: var(--color-text);
-  text-shadow: 6px 6px 6px var(--color-text-shadow);
+  text-shadow: 0.15rem 0.15rem 0 var(--color-text-shadow);
   background: var(--color-background);
   line-height: 1.6;
   font-family: 'Press Start 2P', system-ui;
