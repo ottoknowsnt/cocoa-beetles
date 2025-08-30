@@ -22,6 +22,7 @@ import { RouterView } from 'vue-router'
   background-repeat: repeat;
   background-size: 200px 150px;
   animation: 3s linear 1s infinite alternate twinkle;
+  z-index: -1;
 }
 
 @keyframes twinkle {
