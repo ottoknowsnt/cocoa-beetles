@@ -1,14 +1,12 @@
-<template>
-  <div class="challenge-text">
-    <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec.</h1>
-  </div>
-</template>
+<script setup lang="ts">
+import SingleChallenge from '../components/SingleChallenge.vue'
+import buttonPixelArt from '../assets/button_pixel_art.png'
+</script>
 
-<style>
-@media (min-width: 1024px) {
-  .challenge-text {
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+<template>
+  <SingleChallenge
+    :challenge-icon="buttonPixelArt"
+    challenge-text="¿Cuál es el mejor sabor de café?"
+    challenge-answer="lotus"
+  />
+</template>
