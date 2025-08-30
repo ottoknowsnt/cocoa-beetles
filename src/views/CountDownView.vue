@@ -15,7 +15,7 @@ import CountDown from '../components/CountDown.vue'
   </div>
 </template>
 
-<style>
+<style scoped>
 .count-down-container {
   display: flex;
   flex-direction: column;
