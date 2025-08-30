@@ -1,5 +1,5 @@
 <template>
-  <vue-countdown :time="time" v-slot="{ days, hours, minutes }">
+  <vue-countdown :time="time" v-slot="{ days, hours, minutes }" @end="goToChallenge">
     <div class="count-down">{{ days }} : {{ hours }} : {{ minutes }}</div>
   </vue-countdown>
 </template>
@@ -10,9 +10,19 @@ export default {
     const now = new Date()
     const anniversary = new Date(2025, 8, 22)
 
-    return {
-      time: anniversary.getTime() - now.getTime(),
+    let time = anniversary.getTime() - now.getTime()
+    if (time < 0) {
+      time = 0
     }
+
+    return {
+      time,
+    }
+  },
+  methods: {
+    goToChallenge() {
+      this.$router.push('/challenge')
+    },
   },
 }
 </script>
