@@ -11,7 +11,7 @@
       />
       <p v-if="error">{{ error }}</p>
     </form>
-    <button :disabled="!challengePassed" @click.once="completeChallenge">Continuar</button>
+    <button :disabled="!challengePassed" @click="completeChallenge">Continuar</button>
   </div>
 </template>
 
@@ -33,12 +33,16 @@ export default {
     validateChallenge() {
       if (this.challengeResponse.toLowerCase() === this.challengeAnswer.toLowerCase()) {
         this.challengePassed = true
+        this.error = ''
       } else {
         this.error = 'Respuesta incorrecta'
       }
     },
     completeChallenge() {
-      this.$router.push('/')
+      this.challengePassed = false
+      this.challengeResponse = ''
+      this.error = ''
+      this.$emit('completeChallenge')
     },
   },
 }
