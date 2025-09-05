@@ -25,7 +25,7 @@ mapboxgl.accessToken =
 export default defineComponent({
   data() {
     return {
-      map: null as mapboxgl.Map | null,
+      map: null as any,
       geolocationId: null as number | null,
       position: null as GeolocationPosition | null,
       challengesPositions: [
