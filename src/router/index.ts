@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import CountDownView from '../views/CountDownView.vue'
+import ChallengeView from '@/views/ChallengeView.vue'
+import MapView from '@/views/MapView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,12 +14,12 @@ const router = createRouter({
     {
       path: '/challenge',
       name: 'challenge',
-      component: () => import('../views/ChallengeView.vue'),
+      component: ChallengeView,
     },
     {
       path: '/map',
       name: 'map',
-      component: () => import('../views/MapView.vue'),
+      component: MapView,
     },
   ],
 })
