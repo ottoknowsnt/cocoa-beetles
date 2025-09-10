@@ -1,5 +1,5 @@
 <template>
-  <vue-countdown :time="time" v-slot="{ days, hours, minutes }" @end="goToChallenge">
+  <vue-countdown :time="time" v-slot="{ days, hours, minutes }" @end="goToMap">
     <div class="count-down">{{ days }} : {{ hours }} : {{ minutes }}</div>
   </vue-countdown>
 </template>
@@ -20,8 +20,8 @@ export default {
     }
   },
   methods: {
-    goToChallenge() {
-      this.$router.push('/challenge')
+    goToMap() {
+      this.$router.push('/map')
     },
   },
 }

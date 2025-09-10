@@ -37,7 +37,9 @@ export default defineComponent({
       const nextChallenge = this.currentGeoChallengeProperties.nextChallengeId
       this.changeChallenge(this.currentChallenge, nextChallenge)
 
-      if (!nextChallenge) {
+      if (nextChallenge) {
+        this.$router.push('/map')
+      } else {
         this.$router.push('/')
       }
     },

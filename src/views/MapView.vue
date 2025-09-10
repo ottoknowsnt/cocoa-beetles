@@ -1,5 +1,5 @@
 <template>
-  <div ref="mapContainer" class="map-container"></div>
+  <div id="map-container" class="map-container"></div>
 </template>
 
 <script lang="ts">
@@ -7,6 +7,7 @@ import { geoChallenges } from '@/data/geoChallenges'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { defineComponent } from 'vue'
+import { length } from '@turf/length'
 
 mapboxgl.accessToken =
   'pk.eyJ1Ijoib3R0b2RvZXNudGtub3ciLCJhIjoiY21ibTlrZnJyMHpsNTJrcXZkN3M2aXNzayJ9.IEpe-Wpq-rnMMK2-jWSrjA'
@@ -27,31 +28,39 @@ export default defineComponent({
   methods: {
     initMap() {
       this.map = new mapboxgl.Map({
-        container: this.$refs.mapContainer as HTMLElement,
-        style: 'mapbox://styles/mapbox/light-v11',
-        center: this.challengesPositions[0],
+        container: 'map-container',
+        style: 'mapbox://styles/mapbox/standard',
+        config: {
+          basemap: {
+            theme: 'monochrome',
+          },
+        },
+        center: geoChallenges.features[0].geometry.coordinates as mapboxgl.LngLatLike,
         zoom: 15,
       })
 
-      this.map.on('load', () => {
-        this.map.addSource('geoChallenges', {
-          type: 'geojson',
-          data: geoChallenges,
+      for (const marker of geoChallenges.features) {
+        const el = document.createElement('div')
+        el.className = 'marker'
+        el.style.backgroundImage = `url(${marker.properties.challengeIcon})`
+        el.style.width = '2rem'
+        el.style.height = '2rem'
+        el.style.backgroundSize = '100%'
+
+        el.addEventListener('click', () => {
+          this.goToChallenge(marker.geometry.coordinates)
         })
-        this.map.addLayer({
-          id: 'geoChallenges-layer',
-          type: 'circle',
-          source: 'geoChallenges',
-          paint: {
-            'circle-radius': 4,
-          },
-        })
-      })
+
+        new mapboxgl.Marker(el)
+          .setLngLat(marker.geometry.coordinates as mapboxgl.LngLatLike)
+          .addTo(this.map)
+      }
     },
     initGeolocation() {
       this.geolocationId = navigator.geolocation.watchPosition(
         (position) => {
           this.position = position
+          this.map.setCenter([position.coords.longitude, position.coords.latitude])
         },
         (error) => {
           console.log(error)
@@ -61,10 +70,28 @@ export default defineComponent({
         },
       )
     },
+    goToChallenge(challengeCoordinates: number[]) {
+      const lineToChallenge = {
+        type: 'Feature',
+        geometry: {
+          type: 'LineString',
+          coordinates: [
+            [this.position?.coords.longitude || 0, this.position?.coords.latitude || 0],
+            challengeCoordinates,
+          ],
+        },
+        properties: null,
+      }
+      const metersToChallenge = length(lineToChallenge) * 1000
+      const accuracy = this.position?.coords.accuracy ?? 0
+      if (metersToChallenge < accuracy + 10) {
+        this.$router.push('/challenge')
+      }
+    },
   },
   mounted() {
-    this.initMap()
     this.initGeolocation()
+    this.initMap()
   },
 
   unmounted() {
@@ -83,5 +110,13 @@ export default defineComponent({
 .map-container {
   width: 20rem;
   height: 20rem;
+}
+
+.marker {
+  display: block;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
 }
 </style>

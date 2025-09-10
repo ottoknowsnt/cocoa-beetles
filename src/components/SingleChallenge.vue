@@ -1,6 +1,6 @@
 <template>
   <div class="challenge-text">
-    <img alt="Vue logo" class="logo" :src="challengeIcon" width="125" height="125" />
+    <img alt="Challenge Icon" :src="challengeIcon" width="125" height="125" />
     <p>{{ challengeText }}</p>
     <form @submit.prevent="validateChallenge">
       <input
