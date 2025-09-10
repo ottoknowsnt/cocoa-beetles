@@ -1,20 +1,9 @@
 <template>
-  <p>List</p>
-  <p v-for="challengePosition in challengesPositions">
-    {{ challengePosition }}
-  </p>
-  <div v-if="position">
-    <p>Position</p>
-    <p>
-      [{{ position.coords.longitude }}, {{ position.coords.latitude }}] (+/-{{
-        position.coords.accuracy
-      }}m)
-    </p>
-  </div>
   <div ref="mapContainer" class="map-container"></div>
 </template>
 
 <script lang="ts">
+import { geoChallenges } from '@/data/geoChallenges'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { defineComponent } from 'vue'
@@ -44,8 +33,19 @@ export default defineComponent({
         zoom: 15,
       })
 
-      this.challengesPositions.forEach((challengePosition) => {
-        new mapboxgl.Marker().setLngLat(challengePosition).addTo(this.map)
+      this.map.on('load', () => {
+        this.map.addSource('geoChallenges', {
+          type: 'geojson',
+          data: geoChallenges,
+        })
+        this.map.addLayer({
+          id: 'geoChallenges-layer',
+          type: 'circle',
+          source: 'geoChallenges',
+          paint: {
+            'circle-radius': 4,
+          },
+        })
       })
     },
     initGeolocation() {
