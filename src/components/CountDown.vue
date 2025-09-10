@@ -8,7 +8,7 @@
 export default {
   data() {
     const now = new Date()
-    const anniversary = new Date(2025, 8, 22)
+    const anniversary = new Date(2025, 8, 21)
 
     let time = anniversary.getTime() - now.getTime()
     if (time < 0) {
