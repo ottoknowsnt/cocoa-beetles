@@ -1,33 +1,54 @@
 <template>
-  <vue-countdown :time="time" v-slot="{ days, hours, minutes }" @end="goToMap">
+  <img alt="Moon" :src="moonPixelArt" id="moon" class="moon" />
+  <vue-countdown :time="time" v-slot="{ days, hours, minutes }" @progress="moveMoon" @end="goToMap">
     <div class="count-down">{{ days }} : {{ hours }} : {{ minutes }}</div>
   </vue-countdown>
 </template>
 
 <script lang="ts">
+import moonPixelArt from '@/assets/moon_pixel_art.png'
 export default {
   data() {
     const now = new Date()
-    const anniversary = new Date(2025, 8, 21)
+    const challengeDate = new Date(2025, 8, 21)
 
-    let time = anniversary.getTime() - now.getTime()
+    let time = challengeDate.getTime() - now.getTime()
     if (time < 0) {
       time = 0
     }
 
     return {
       time,
+      moonPixelArt,
     }
   },
   methods: {
     goToMap() {
       this.$router.push('/map')
     },
+    moveMoon({ days }: { days: number }) {
+      const moon = document.getElementById('moon')
+      if (moon) {
+        moon.style.right = `${100 - days * 5}%`
+        moon.style.bottom = `${days * 5}%`
+      }
+    },
   },
 }
 </script>
 
 <style scoped>
+.moon {
+  position: absolute;
+  transform: translate(50%, 50%);
+  right: 50%;
+  bottom: 50%;
+  width: 10rem;
+  height: 10rem;
+  z-index: -1;
+  opacity: 0.8;
+}
+
 .count-down {
   font-size: 1.5rem;
   text-align: center;
