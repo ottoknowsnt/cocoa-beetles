@@ -38,12 +38,15 @@ export default {
 .moon {
   position: absolute;
   transform: translate(50%, 50%);
-  right: 50%;
-  bottom: 50%;
+  right: 0%;
+  bottom: 100%;
   width: 10rem;
   height: 10rem;
   z-index: -1;
   opacity: 0.8;
+  transition:
+    right 10s,
+    bottom 10s;
 }
 
 .count-down {
