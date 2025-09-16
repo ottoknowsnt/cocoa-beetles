@@ -39,7 +39,10 @@ export default {
       if (this.challengeResponse.toLowerCase() === this.challengeAnswer.toLowerCase()) {
         this.challengePassed = true
         this.error = ''
-        document.body.style.background = 'var(--color-background-bw)'
+        document.body.style.setProperty('--color-background-top', 'white')
+        document.body.style.setProperty('--color-background-bottom', 'black')
+        document.body.style.setProperty('--color-text', 'white')
+        document.body.style.setProperty('--color-text-shadow', 'black')
       } else {
         this.error = 'Respuesta incorrecta'
       }
@@ -48,7 +51,10 @@ export default {
       this.challengePassed = false
       this.challengeResponse = ''
       this.error = ''
-      document.body.style.background = 'var(--color-background)'
+      document.body.style.setProperty('--color-background-top', 'var(--coraline-sky-dark)')
+      document.body.style.setProperty('--color-background-bottom', 'var(--coraline-sky-light)')
+      document.body.style.setProperty('--color-text', 'var(--coraline-tunnel-light-purple)')
+      document.body.style.setProperty('--color-text-shadow', 'var(--coraline-tunnel-dark-purple)')
       this.$emit('completeChallenge')
     },
   },
@@ -64,10 +70,14 @@ export default {
 }
 
 .challenge-text {
+  color: var(--coraline-table-light-green);
+  text-shadow: 0.15rem 0.15rem 0 var(--coraline-table-dark-green);
   font-size: 1.25rem;
   text-transform: uppercase;
   text-align: center;
-  transition: all 1s ease-in-out;
+  transition:
+    color 4s,
+    text-shadow 4s;
 }
 
 .challenge-text-bw {
@@ -76,7 +86,8 @@ export default {
 }
 
 .challenge-error {
-  color: red;
+  color: var(--coraline-sofa-light-red);
+  text-shadow: 0.15rem 0.15rem 0 var(--coraline-sofa-dark-red);
   font-size: 0.8rem;
   text-transform: uppercase;
   text-align: center;
@@ -92,8 +103,8 @@ export default {
   width: 19rem;
   height: 3rem;
   text-align: center;
-  color: var(--coraline-tunnel-dark-purple);
-  background-color: var(--coraline-tunnel-light-purple);
+  color: var(--coraline-bug-light-blue);
+  background-color: var(--coraline-bug-dark-blue);
   border: none;
   clip-path: polygon(
     0px calc(100% - 8px),
@@ -117,7 +128,10 @@ export default {
     4px 8px,
     0px 8px
   );
-  transition: all 1s ease-in-out;
+  transition:
+    background-color 4s,
+    color 4s,
+    opacity 4s;
 }
 
 .challenge-input:focus {
@@ -131,7 +145,7 @@ export default {
 }
 
 .challenge-input::placeholder {
-  color: var(--coraline-tunnel-dark-purple);
+  color: var(--coraline-bug-light-blue);
 }
 
 .challenge-button {
@@ -164,12 +178,15 @@ export default {
     4px 8px,
     0px 8px
   );
-  transition: all 1s ease-in-out;
+  transition:
+    background-color 4s,
+    color 4s,
+    opacity 4s;
 }
 
 .challenge-button:disabled {
-  color: var(--coraline-tunnel-dark-purple);
-  background-color: var(--coraline-tunnel-light-purple);
+  color: var(--coraline-table-light-green);
+  background-color: var(--coraline-table-dark-green);
   opacity: 0.8;
 }
 </style>
