@@ -25,7 +25,7 @@ export default defineComponent({
       map: null as any,
       geolocationId: null as number | null,
       position: null as GeolocationPosition | null,
-      positionMarker: null as any | null,
+      positionMarker: null as any,
       challengesPositions: [
         [-3.6675301, 40.1960395],
         [-3.6949157, 40.4466171],
@@ -98,7 +98,7 @@ export default defineComponent({
     },
     goToChallenge(challengeCoordinates: number[]) {
       const lineToChallenge = {
-        type: 'Feature',
+        type: 'Feature' as const,
         geometry: {
           type: 'LineString',
           coordinates: [
