@@ -9,6 +9,7 @@
 </template>
 
 <script lang="ts">
+import testAvatarPixelArt from '@/assets/test_avatar_pixel_art.png'
 import { geoChallenges } from '@/data/geoChallenges'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
@@ -24,6 +25,7 @@ export default defineComponent({
       map: null as any,
       geolocationId: null as number | null,
       position: null as GeolocationPosition | null,
+      positionMarker: null as any | null,
       challengesPositions: [
         [-3.6675301, 40.1960395],
         [-3.6949157, 40.4466171],
@@ -42,7 +44,7 @@ export default defineComponent({
           },
         },
         center: geoChallenges.features[0].geometry.coordinates as mapboxgl.LngLatLike,
-        zoom: 15,
+        zoom: 16,
       })
 
       for (const marker of geoChallenges.features) {
@@ -61,12 +63,30 @@ export default defineComponent({
           .setLngLat(marker.geometry.coordinates as mapboxgl.LngLatLike)
           .addTo(this.map)
       }
+
+      const el = document.createElement('div')
+      el.className = 'marker'
+      el.style.backgroundImage = `url(${testAvatarPixelArt})`
+      el.style.width = '2rem'
+      el.style.height = '2rem'
+      el.style.backgroundSize = '100%'
+
+      this.positionMarker = new mapboxgl.Marker(el)
     },
     initGeolocation() {
       this.geolocationId = navigator.geolocation.watchPosition(
         (position) => {
           this.position = position
-          this.map.setCenter([position.coords.longitude, position.coords.latitude])
+          const positionLngLat: mapboxgl.LngLatLike = [
+            position.coords.longitude,
+            position.coords.latitude,
+          ]
+          this.positionMarker?.setLngLat(positionLngLat).addTo(this.map)
+          this.map?.flyTo({
+            center: positionLngLat,
+            zoom: 16,
+            speed: 0.6,
+          })
         },
         (error) => {
           console.log(error)
@@ -90,14 +110,19 @@ export default defineComponent({
       }
       const metersToChallenge = length(lineToChallenge) * 1000
       const accuracy = this.position?.coords.accuracy ?? 0
-      if (metersToChallenge < accuracy + 10) {
+      const errorMarginMeters = accuracy + 10
+      if (metersToChallenge < errorMarginMeters) {
         this.$router.push('/challenge')
+      } else {
+        window.alert(
+          `Distancia al punto: ${metersToChallenge.toFixed(2)} metros\nMargen de error: ${errorMarginMeters.toFixed(2)} metros`,
+        )
       }
     },
   },
   mounted() {
-    this.initGeolocation()
     this.initMap()
+    this.initGeolocation()
   },
 
   unmounted() {
