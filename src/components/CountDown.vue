@@ -1,6 +1,6 @@
 <template>
   <img alt="Moon" :src="moonPixelArt" id="moon" class="moon" />
-  <vue-countdown :time="time" v-slot="{ days, hours, minutes }" @progress="moveMoon">
+  <vue-countdown :time="time" v-slot="{ days, hours, minutes }" @progress="moveMoon" @end="goToMap">
     <div class="count-down">{{ days }} : {{ hours }} : {{ minutes }}</div>
   </vue-countdown>
 </template>
@@ -23,6 +23,9 @@ export default {
     }
   },
   methods: {
+    goToMap() {
+      this.$router.push('/map')
+    },
     moveMoon({ days }: { days: number }) {
       const moon = document.getElementById('moon')
       if (moon) {
