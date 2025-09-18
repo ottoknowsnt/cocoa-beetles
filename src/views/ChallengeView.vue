@@ -40,7 +40,7 @@ export default defineComponent({
       if (nextChallenge) {
         this.$router.push('/map')
       } else {
-        this.$router.push('/')
+        this.$router.push('/prize')
       }
     },
     ...mapActions(useChallengesStore, ['changeChallenge']),
