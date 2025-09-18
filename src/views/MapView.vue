@@ -9,12 +9,12 @@
 </template>
 
 <script lang="ts">
-import testAvatarPixelArt from '@/assets/test_avatar_pixel_art.png'
 import { geoChallenges } from '@/data/geoChallenges'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { defineComponent } from 'vue'
 import { length } from '@turf/length'
+import type { Feature, Point } from 'geojson'
 
 mapboxgl.accessToken =
   'pk.eyJ1Ijoib3R0b2RvZXNudGtub3ciLCJhIjoiY21ibTlrZnJyMHpsNTJrcXZkN3M2aXNzayJ9.IEpe-Wpq-rnMMK2-jWSrjA'
@@ -23,94 +23,84 @@ export default defineComponent({
   data() {
     return {
       map: null as any,
-      geolocationId: null as number | null,
       position: null as GeolocationPosition | null,
-      positionMarker: null as any,
-      challengesPositions: [
-        [-3.6675301, 40.1960395],
-        [-3.6949157, 40.4466171],
-        [-3.6778232, 40.4378105],
-      ] as mapboxgl.LngLatLike[],
     }
   },
   methods: {
     initMap() {
       this.map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/standard',
+        style: 'mapbox://styles/mapbox/standard?optimize=true',
         config: {
           basemap: {
             theme: 'monochrome',
+            showPointOfInterestLabels: false,
+            show3dObjects: false,
           },
         },
         center: geoChallenges.features[0].geometry.coordinates as mapboxgl.LngLatLike,
-        zoom: 16,
+        zoom: 15,
       })
 
-      for (const marker of geoChallenges.features) {
+      const geolocate = new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,
+        },
+        trackUserLocation: true,
+      })
+      this.map.addControl(geolocate)
+
+      geolocate.on('geolocate', (geolocationPosition: GeolocationPosition) => {
+        this.position = geolocationPosition
+      })
+
+      this.map.on('style.load', () => {
+        this.map.setRain({
+          'center-thinning': 0,
+          density: 1,
+          intensity: 1,
+          'distortion-strength': 1,
+        })
+      })
+
+      this.map.on('load', () => {
+        this.addMarkers()
+        geolocate.trigger()
+      })
+    },
+    addMarkers() {
+      for (const geoChallenge of geoChallenges.features) {
         const el = document.createElement('div')
         el.className = 'marker'
-        el.style.backgroundImage = `url(${marker.properties.challengeIcon})`
+        el.style.backgroundImage = `url(${geoChallenge.properties?.challengeIcon})`
         el.style.width = '2rem'
         el.style.height = '2rem'
         el.style.backgroundSize = '100%'
 
         el.addEventListener('click', () => {
-          this.goToChallenge(marker.geometry.coordinates)
+          this.goToChallenge(geoChallenge)
         })
 
         new mapboxgl.Marker(el)
-          .setLngLat(marker.geometry.coordinates as mapboxgl.LngLatLike)
+          .setLngLat(geoChallenge.geometry.coordinates as mapboxgl.LngLatLike)
           .addTo(this.map)
       }
-
-      const el = document.createElement('div')
-      el.className = 'marker'
-      el.style.backgroundImage = `url(${testAvatarPixelArt})`
-      el.style.width = '2rem'
-      el.style.height = '2rem'
-      el.style.backgroundSize = '100%'
-
-      this.positionMarker = new mapboxgl.Marker(el)
     },
-    initGeolocation() {
-      this.geolocationId = navigator.geolocation.watchPosition(
-        (position) => {
-          this.position = position
-          const positionLngLat: mapboxgl.LngLatLike = [
-            position.coords.longitude,
-            position.coords.latitude,
-          ]
-          this.positionMarker?.setLngLat(positionLngLat).addTo(this.map)
-          this.map?.flyTo({
-            center: positionLngLat,
-            zoom: 16,
-            speed: 0.6,
-          })
-        },
-        (error) => {
-          console.log(error)
-        },
-        {
-          enableHighAccuracy: true,
-        },
-      )
-    },
-    goToChallenge(challengeCoordinates: number[]) {
+    goToChallenge(geoChallenge: Feature<Point>) {
       const lineToChallenge = {
         type: 'Feature' as const,
         geometry: {
           type: 'LineString',
           coordinates: [
             [this.position?.coords.longitude || 0, this.position?.coords.latitude || 0],
-            challengeCoordinates,
+            geoChallenge.geometry.coordinates,
           ],
         },
         properties: null,
       }
       const metersToChallenge = length(lineToChallenge) * 1000
       const accuracy = this.position?.coords.accuracy ?? 0
-      const errorMarginMeters = accuracy + 10
+      const errorMarginMeters = accuracy + geoChallenge.properties?.errorMarginMeters
       if (metersToChallenge < errorMarginMeters) {
         this.$router.push('/challenge')
       } else {
@@ -122,16 +112,12 @@ export default defineComponent({
   },
   mounted() {
     this.initMap()
-    this.initGeolocation()
   },
 
   unmounted() {
     if (this.map) {
       this.map.remove()
       this.map = null
-    }
-    if (this.geolocationId) {
-      navigator.geolocation.clearWatch(this.geolocationId)
     }
   },
 })

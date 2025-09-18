@@ -22,7 +22,7 @@ export default defineComponent({
   computed: {
     currentGeoChallengeProperties() {
       return geoChallenges.features.find(
-        (feature) => feature.properties.challengeId === this.currentChallenge,
+        (feature) => feature.properties?.challengeId === this.currentChallenge,
       )?.properties
     },
     ...mapStores(useChallengesStore),

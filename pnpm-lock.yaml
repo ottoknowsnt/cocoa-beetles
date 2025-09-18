@@ -14,6 +14,9 @@ importers:
       '@turf/length':
         specifier: ^7.2.0
         version: 7.2.0
+      '@types/geojson':
+        specifier: ^7946.0.16
+        version: 7946.0.16
       mapbox-gl:
         specifier: ^3.14.0
         version: 3.14.0
