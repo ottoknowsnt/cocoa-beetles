@@ -4,7 +4,8 @@ import { defineStore } from 'pinia'
 export const useChallengesStore = defineStore('challenges', {
   state: () => ({
     currentChallenge:
-      localStorage.getItem('current_challenge') || geoChallenges.features[0].properties.challengeId,
+      localStorage.getItem('current_challenge') ||
+      geoChallenges.features[0].properties?.challengeId,
     passedChallenges: JSON.parse(localStorage.getItem('passed_challenges') || '[]') as string[],
   }),
   actions: {
