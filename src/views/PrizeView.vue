@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import loremIpsumPdf from '@/assets/lorem-ipsum.pdf'
+import pinkPalaceApartmentsPostcard from '@/assets/Pink Palace Apartments.pdf'
+import postcardPixelArt from '@/assets/postcard_pixel_art.png'
 </script>
 
 <template>
@@ -7,12 +8,10 @@ import loremIpsumPdf from '@/assets/lorem-ipsum.pdf'
     <div class="prize-message">
       <p>Tienes correo...</p>
     </div>
-    <img
-      src="@/assets/button_pixel_art.png"
-      alt="Pink Palace Apartments"
-      class="pink-palace-apartments"
-    />
-    <a :href="loremIpsumPdf" target="_blank" class="download-button">Descargar postal</a>
+    <img :src="postcardPixelArt" alt="Postcard" class="postcard" />
+    <a :href="pinkPalaceApartmentsPostcard" target="_blank" class="download-button"
+      >Descargar postal</a
+    >
   </div>
 </template>
 
@@ -30,8 +29,7 @@ import loremIpsumPdf from '@/assets/lorem-ipsum.pdf'
   text-align: center;
 }
 
-.pink-palace-apartments {
-  width: 8rem;
+.postcard {
   height: 8rem;
 }
 
