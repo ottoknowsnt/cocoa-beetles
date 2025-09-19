@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import pinkPalaceApartmentsPostcard from '@/assets/Pink Palace Apartments.pdf'
 import postcardPixelArt from '@/assets/postcard_pixel_art.png'
+import { confetti } from '@tsparticles/confetti'
+
+confetti({})
 </script>
 
 <template>
