@@ -1,22 +1,26 @@
 <template>
   <div class="challenge-container">
     <img alt="Challenge Icon" :src="challengeIcon" class="challenge-icon" />
-    <p class="challenge-text" :class="{ 'challenge-text-bw': challengePassed }">
-      {{ challengeText }}
-    </p>
-    <form @submit.prevent="validateChallenge">
-      <input
-        type="text"
-        class="challenge-input"
-        v-model.trim="challengeResponse"
-        placeholder="Introduce tu respuesta"
-        :disabled="challengePassed"
-      />
-    </form>
-    <p class="challenge-error" v-if="error">{{ error }}</p>
-    <button class="challenge-button" :disabled="!challengePassed" @click="completeChallenge">
-      Continuar
-    </button>
+    <div class="challenge-texts" :class="{ 'challenge-texts-bw': challengePassed }">
+      <i class="challenge-text" v-for="challengeText in challengeTexts" :key="challengeText">{{
+        challengeText
+      }}</i>
+    </div>
+    <div class="challenge-input-container">
+      <form @submit.prevent="validateChallenge">
+        <input
+          type="text"
+          class="challenge-input"
+          v-model.trim="challengeResponse"
+          placeholder="¿Qué es?"
+          :disabled="challengePassed"
+        />
+      </form>
+      <p class="challenge-error" v-if="error">{{ error }}</p>
+      <button class="challenge-button" :disabled="!challengePassed" @click="completeChallenge">
+        Continuar
+      </button>
+    </div>
   </div>
 </template>
 
@@ -24,7 +28,7 @@
 export default {
   props: {
     challengeIcon: { type: String, required: true },
-    challengeText: { type: String, required: true },
+    challengeTexts: { type: Array<string>, required: true },
     challengeAnswer: { type: String, required: true },
   },
   data() {
@@ -39,12 +43,12 @@ export default {
       if (this.challengeResponse.toLowerCase() === this.challengeAnswer.toLowerCase()) {
         this.challengePassed = true
         this.error = ''
-        document.body.style.setProperty('--color-background-top', 'white')
-        document.body.style.setProperty('--color-background-bottom', 'black')
+        document.body.style.setProperty('--color-background-top', 'black')
+        document.body.style.setProperty('--color-background-bottom', 'white')
         document.body.style.setProperty('--color-text', 'white')
         document.body.style.setProperty('--color-text-shadow', 'black')
       } else {
-        this.error = 'Respuesta incorrecta'
+        this.error = 'Vuelve a intentarlo...'
       }
     },
     completeChallenge() {
@@ -65,22 +69,31 @@ export default {
 .challenge-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   place-items: center;
 }
 
-.challenge-text {
+.challenge-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  place-items: center;
+}
+
+.challenge-texts {
   color: var(--coraline-table-light-green);
   text-shadow: 0.15rem 0.15rem 0 var(--coraline-table-dark-green);
-  font-size: 1.25rem;
-  text-transform: uppercase;
+  font-size: 0.885rem;
   text-align: center;
   transition:
     color 4s,
     text-shadow 4s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 }
 
-.challenge-text-bw {
+.challenge-texts-bw {
   color: white;
   text-shadow: 0.15rem 0.15rem 0 black;
 }
@@ -94,8 +107,8 @@ export default {
 }
 
 .challenge-icon {
-  width: 8rem;
-  height: 8rem;
+  width: 7rem;
+  height: 7rem;
 }
 
 .challenge-input {
@@ -146,12 +159,14 @@ export default {
 
 .challenge-input::placeholder {
   color: var(--coraline-bug-light-blue);
+  opacity: 0.5;
 }
 
 .challenge-button {
   font-family: inherit;
   width: 19rem;
   height: 3rem;
+  text-transform: uppercase;
   text-align: center;
   color: black;
   background-color: white;
