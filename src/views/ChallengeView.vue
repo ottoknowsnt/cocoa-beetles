@@ -45,5 +45,10 @@ export default defineComponent({
     },
     ...mapActions(useChallengesStore, ['changeChallenge']),
   },
+  mounted() {
+    if (this.passedChallenges.length === geoChallenges.features.length) {
+      this.$router.push('/prize')
+    }
+  },
 })
 </script>
