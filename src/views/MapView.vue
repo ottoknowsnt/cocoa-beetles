@@ -104,9 +104,7 @@ export default defineComponent({
       if (metersToChallenge < errorMarginMeters) {
         this.$router.push('/challenge')
       } else {
-        window.alert(
-          `Distancia al punto: ${metersToChallenge.toFixed(2)} metros\nMargen de error: ${errorMarginMeters.toFixed(2)} metros`,
-        )
+        window.alert('¡Estás demasiado lejos del ojo de fantasma!')
       }
     },
   },
