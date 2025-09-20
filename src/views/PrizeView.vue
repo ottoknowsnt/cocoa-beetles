@@ -3,7 +3,15 @@ import pinkPalaceApartmentsPostcard from '@/assets/Pink Palace Apartments.pdf'
 import postcardPixelArt from '@/assets/postcard_pixel_art.png'
 import { confetti } from '@tsparticles/confetti'
 
-confetti({})
+const defaults = {
+  shapes: ['heart'],
+  scalar: 4,
+  colors: ['#824d9a'],
+}
+confetti({ ...defaults, angle: 0 })
+confetti({ ...defaults, angle: 90 })
+confetti({ ...defaults, angle: 180 })
+confetti({ ...defaults, angle: 270 })
 </script>
 
 <template>
@@ -37,8 +45,9 @@ confetti({})
 }
 
 .download-button {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   text-align: center;
+  text-transform: uppercase;
   text-decoration: none;
   color: var(--color-text);
   background-color: var(--color-text-shadow);
@@ -64,6 +73,6 @@ confetti({})
     4px 8px,
     0px 8px
   );
-  padding: 0.25rem;
+  padding: 1rem;
 }
 </style>
