@@ -1,4 +1,6 @@
-import buttonPixelArt from '@/assets/button_pixel_art.png'
+import bobaPixelArt from '@/assets/boba_pixel_art.png'
+import ringPixelArt from '@/assets/ring_pixel_art.png'
+import sunPixelArt from '@/assets/sun_pixel_art.png'
 import type { FeatureCollection, Point } from 'geojson'
 
 export const geoChallenges: FeatureCollection<Point> = {
@@ -13,7 +15,7 @@ export const geoChallenges: FeatureCollection<Point> = {
       properties: {
         errorMarginMeters: 50,
         challengeId: 'button-sun',
-        challengeIcon: buttonPixelArt,
+        challengeIcon: sunPixelArt,
         challengeText: 'Adivinanza Sol',
         challengeAnswer: 'Sol',
         nextChallengeId: 'eyes-tea',
@@ -28,7 +30,7 @@ export const geoChallenges: FeatureCollection<Point> = {
       properties: {
         errorMarginMeters: 10,
         challengeId: 'eyes-tea',
-        challengeIcon: buttonPixelArt,
+        challengeIcon: bobaPixelArt,
         challengeText: 'Adivinanza Bubble Tea',
         challengeAnswer: 'Bubble Tea',
         nextChallengeId: 'run-fast',
@@ -43,7 +45,7 @@ export const geoChallenges: FeatureCollection<Point> = {
       properties: {
         errorMarginMeters: 10,
         challengeId: 'run-fast',
-        challengeIcon: buttonPixelArt,
+        challengeIcon: ringPixelArt,
         challengeText: 'Adivinanza Juegos',
         challengeAnswer: 'Juegos',
       },
