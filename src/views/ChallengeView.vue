@@ -6,7 +6,7 @@ import SingleChallenge from '../components/SingleChallenge.vue'
   <SingleChallenge
     v-if="currentGeoChallengeProperties"
     :challenge-icon="currentGeoChallengeProperties.challengeIcon"
-    :challenge-text="currentGeoChallengeProperties.challengeText"
+    :challenge-texts="currentGeoChallengeProperties.challengeTexts"
     :challenge-answer="currentGeoChallengeProperties.challengeAnswer"
     @completeChallenge="completeChallenge"
   />

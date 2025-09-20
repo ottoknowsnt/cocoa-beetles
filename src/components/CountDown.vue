@@ -1,7 +1,7 @@
 <template>
   <img alt="Moon" :src="moonPixelArt" id="moon" class="moon" />
-  <vue-countdown :time="time" v-slot="{ days, hours, minutes }" @progress="moveMoon" @end="goToMap">
-    <div class="count-down">{{ days }} : {{ hours }} : {{ minutes }}</div>
+  <vue-countdown :time="time" v-slot="countdown" @progress="moveMoon" @end="goToMap">
+    <div class="count-down">{{ countdownText(countdown) }}</div>
   </vue-countdown>
 </template>
 
@@ -23,6 +23,28 @@ export default {
     }
   },
   methods: {
+    countdownText({
+      days,
+      hours,
+      minutes,
+      seconds,
+    }: {
+      days: number
+      hours: number
+      minutes: number
+      seconds: number
+    }): string {
+      if (days > 0) {
+        return `${days} : ${hours} : ${minutes}`
+      }
+      if (hours > 0) {
+        return `${hours} : ${minutes} : ${seconds}`
+      }
+      if (minutes > 0) {
+        return `${minutes} : ${seconds}`
+      }
+      return `${seconds}`
+    },
     goToMap() {
       this.$router.push('/map')
     },

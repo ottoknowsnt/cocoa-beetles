@@ -40,7 +40,7 @@ export default defineComponent({
         },
         center: geoChallenges.features[0].geometry.coordinates as mapboxgl.LngLatLike,
         zoom: 15,
-      })
+      }).addControl(new mapboxgl.FullscreenControl())
 
       const geolocate = new mapboxgl.GeolocateControl({
         positionOptions: {
@@ -104,9 +104,7 @@ export default defineComponent({
       if (metersToChallenge < errorMarginMeters) {
         this.$router.push('/challenge')
       } else {
-        window.alert(
-          `Distancia al punto: ${metersToChallenge.toFixed(2)} metros\nMargen de error: ${errorMarginMeters.toFixed(2)} metros`,
-        )
+        window.alert('¡Estás demasiado lejos del ojo de fantasma!')
       }
     },
   },
@@ -132,6 +130,9 @@ export default defineComponent({
 .map {
   width: 100%;
   height: 40rem;
+}
+
+.map:not(:fullscreen) {
   clip-path: polygon(
     0px calc(100% - 25px),
     5px calc(100% - 25px),
