@@ -40,7 +40,7 @@ export default defineComponent({
         },
         center: geoChallenges.features[0].geometry.coordinates as mapboxgl.LngLatLike,
         zoom: 15,
-      })
+      }).addControl(new mapboxgl.FullscreenControl())
 
       const geolocate = new mapboxgl.GeolocateControl({
         positionOptions: {
@@ -132,6 +132,9 @@ export default defineComponent({
 .map {
   width: 100%;
   height: 40rem;
+}
+
+.map:not(:fullscreen) {
   clip-path: polygon(
     0px calc(100% - 25px),
     5px calc(100% - 25px),
