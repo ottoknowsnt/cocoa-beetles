@@ -63,3 +63,20 @@ body {
     color 4s,
     text-shadow 4s;
 }
+
+@keyframes pulse {
+  0%,
+  100% {
+    text-shadow:
+      0 0 0.2rem var(--color-text),
+      0 0 0.4rem var(--color-text),
+      0 0 0.6rem var(--color-text);
+  }
+  50% {
+    text-shadow: none;
+  }
+}
+
+.glowing-text {
+  animation: 3.5s linear 0s infinite alternate pulse;
+}

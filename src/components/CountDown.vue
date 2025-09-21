@@ -1,7 +1,7 @@
 <template>
   <img alt="Moon" :src="moonPixelArt" id="moon" class="moon" />
   <vue-countdown :time="time" v-slot="countdown" @progress="moveMoon" @end="goToMap">
-    <div class="count-down">{{ countdownText(countdown) }}</div>
+    <div class="count-down glowing-text">{{ countdownText(countdown) }}</div>
   </vue-countdown>
 </template>
 
@@ -79,18 +79,5 @@ export default {
   text-align: center;
   text-shadow: none;
   animation: 3.5s linear 0s infinite alternate pulse;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    text-shadow:
-      0 0 0.2rem var(--color-text),
-      0 0 0.4rem var(--color-text),
-      0 0 0.6rem var(--color-text);
-  }
-  50% {
-    text-shadow: none;
-  }
 }
 </style>

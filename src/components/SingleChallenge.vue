@@ -197,11 +197,22 @@ export default {
     background-color 4s,
     color 4s,
     opacity 4s;
+  animation: 3s linear 1s infinite alternate blink;
 }
 
 .challenge-button:disabled {
   color: var(--coraline-table-light-green);
   background-color: var(--coraline-table-dark-green);
   opacity: 0.8;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 </style>

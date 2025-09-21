@@ -16,7 +16,7 @@ confetti({ ...defaults, angle: 270 })
 
 <template>
   <div class="prize-container">
-    <div class="prize-message">
+    <div class="prize-message glowing-text">
       <p>Tienes correo...</p>
     </div>
     <img :src="postcardPixelArt" alt="Postcard" class="postcard" />
