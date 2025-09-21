@@ -129,7 +129,7 @@ export default defineComponent({
 }
 .map {
   width: 100%;
-  height: 40rem;
+  height: 35rem;
 }
 
 .map:not(:fullscreen) {
