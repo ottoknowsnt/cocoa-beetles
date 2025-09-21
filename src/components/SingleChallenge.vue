@@ -86,8 +86,8 @@ export default {
   font-size: 0.885rem;
   text-align: center;
   transition:
-    color 4s,
-    text-shadow 4s;
+    color 6s,
+    text-shadow 6s;
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
@@ -142,9 +142,9 @@ export default {
     0px 8px
   );
   transition:
-    background-color 4s,
-    color 4s,
-    opacity 4s;
+    background-color 6s,
+    color 6s,
+    opacity 6s;
 }
 
 .challenge-input:focus {
@@ -194,9 +194,9 @@ export default {
     0px 8px
   );
   transition:
-    background-color 4s,
-    color 4s,
-    opacity 4s;
+    background-color 6s,
+    color 6s,
+    opacity 6s;
   animation: 3s linear 1s infinite alternate blink;
 }
 
