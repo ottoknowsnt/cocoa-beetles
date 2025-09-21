@@ -35,7 +35,7 @@ export const geoChallenges: FeatureCollection<Point> = {
         coordinates: [-3.7120982162426333, 40.42471829680057],
       },
       properties: {
-        errorMarginMeters: 10,
+        errorMarginMeters: 20,
         challengeId: 'eyes-tea',
         challengeIcon: bobaPixelArt,
         challengeTexts: [
@@ -54,7 +54,7 @@ export const geoChallenges: FeatureCollection<Point> = {
         coordinates: [-3.698994518088924, 40.43316295946176],
       },
       properties: {
-        errorMarginMeters: 10,
+        errorMarginMeters: 20,
         challengeId: 'run-fast',
         challengeIcon: ringPixelArt,
         challengeTexts: [
