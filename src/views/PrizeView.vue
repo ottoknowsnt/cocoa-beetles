@@ -21,7 +21,7 @@ confetti({ ...defaults, angle: 270 })
       <p>Tienes correo...</p>
     </div>
     <img :src="postcardPixelArt" alt="Postcard" class="postcard" />
-    <a :href="pinkPalaceApartmentsPostcard" target="_blank" class="download-button"
+    <a :href="pinkPalaceApartmentsPostcard" download class="download-button"
       >Descargar postal</a
     >
   </div>
