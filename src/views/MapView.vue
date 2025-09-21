@@ -15,6 +15,8 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import { defineComponent } from 'vue'
 import { length } from '@turf/length'
 import type { Feature, Point } from 'geojson'
+import { useChallengesStore } from '@/stores/challenges'
+import { mapStores, mapState } from 'pinia'
 
 mapboxgl.accessToken =
   'pk.eyJ1Ijoib3R0b2RvZXNudGtub3ciLCJhIjoiY21ibTlrZnJyMHpsNTJrcXZkN3M2aXNzayJ9.IEpe-Wpq-rnMMK2-jWSrjA'
@@ -38,7 +40,7 @@ export default defineComponent({
             show3dObjects: false,
           },
         },
-        center: geoChallenges.features[0].geometry.coordinates as mapboxgl.LngLatLike,
+        center: this.currentGeoChallengeCoordinates,
         zoom: 15,
       }).addControl(new mapboxgl.FullscreenControl())
 
@@ -107,6 +109,15 @@ export default defineComponent({
         window.alert('¡Estás demasiado lejos del ojo de fantasma!')
       }
     },
+  },
+  computed: {
+    currentGeoChallengeCoordinates() {
+      return geoChallenges.features.find(
+        (feature) => feature.properties?.challengeId === this.currentChallenge,
+      )?.geometry.coordinates as mapboxgl.LngLatLike
+    },
+    ...mapStores(useChallengesStore),
+    ...mapState(useChallengesStore, ['currentChallenge']),
   },
   mounted() {
     this.initMap()
