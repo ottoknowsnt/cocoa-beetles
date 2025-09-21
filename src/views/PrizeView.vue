@@ -7,6 +7,7 @@ const defaults = {
   shapes: ['heart'],
   scalar: 4,
   colors: ['#824d9a'],
+  ticks: 0,
 }
 confetti({ ...defaults, angle: 0 })
 confetti({ ...defaults, angle: 90 })
